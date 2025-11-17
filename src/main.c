@@ -7,7 +7,7 @@
 #include "modPlano.h"
 #include "modFuncionario.h"
 #include "modEquipamento.h"
-#include "modRelatorios.h" // <<< NOVO
+#include "modRelatorios.h"
 
 #include "telaSobre.h"
 #include "telaFinalizacao.h"

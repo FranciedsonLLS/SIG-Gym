@@ -1,23 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "limparTela.h"
-#include "buscar.h" // onde está buscarPorCPF()
 
-// Suas futuras funções de filtro:
-void relatorioBuscarCPF(void);
-void relatorioAlunosPorPlano(void);
-void relatorioFuncionariosPorCargo(void);
+#include "limparTela.h"
+
+// Funções reais dos relatórios:
+#include "buscar.h"           // buscarPorCPF()
+#include "buscarAlunoPlano.h" // buscarAlunoPorPlano()
+// #include "buscarFuncionarioCargo.h" // buscarFuncionarioPorCargo()
 
 char telaRelatorios(void)
 {
     limparTela();
+
     printf("=========================================================================\n");
     printf("===                           RELATÓRIOS                              ===\n");
     printf("=========================================================================\n");
-    printf("===   1. Buscar perfil por CPF                                        ===\n");
-    printf("===   2. Listar ALUNOS por PLANO                                     ===\n");
-    printf("===   3. Listar FUNCIONÁRIOS por CARGO                               ===\n");
-    printf("===   0. Voltar                                                       ===\n");
+    printf("===                                                                   ===\n");
+    printf("===   [1]  Buscar perfil por CPF                                      ===\n");
+    printf("===   [2]  Listar ALUNOS por PLANO                                    ===\n");
+    printf("===   [3]  Listar FUNCIONÁRIOS por CARGO                              ===\n");
+    printf("===                                                                   ===\n");
+    printf("===   [0]  Voltar                                                     ===\n");
+    printf("===                                                                   ===\n");
+    printf("=========================================================================\n");
     printf("=========================================================================\n");
     printf(">>> Escolha uma opção: ");
 
@@ -43,22 +48,22 @@ void moduloRelatorios(void)
             break;
 
         case '2':
-            // relatorioAlunosPorPlano();
+            buscarAlunoPorPlano();
             break;
 
         case '3':
-            // relatorioFuncionariosPorCargo();
+            // buscarFuncionarioPorCargo();
             break;
 
         case '0':
             break;
 
         default:
-            printf(">>> Opção inválida!\n");
+            printf("\n>>> Opção inválida!\n");
             break;
         }
 
-        printf("\n>>> Pressione ENTER...");
+        printf("\n>>> Pressione <ENTER> para continuar...");
         getchar();
         limparTela();
 
