@@ -7,6 +7,7 @@
 #include "buscar.h"           // buscarPorCPF()
 #include "buscarAlunoPlano.h" // buscarAlunoPorPlano()
 // #include "buscarFuncionarioCargo.h" // buscarFuncionarioPorCargo()
+#include "buscarAniversario.h" // <-- NOVO
 
 char telaRelatorios(void)
 {
@@ -19,6 +20,7 @@ char telaRelatorios(void)
     printf("===   [1]  Buscar perfil por CPF                                      ===\n");
     printf("===   [2]  Listar ALUNOS por PLANO                                    ===\n");
     printf("===   [3]  Listar FUNCIONÁRIOS por CARGO                              ===\n");
+    printf("===   [4]  Aniversariantes do mês                                     ===\n");
     printf("===                                                                   ===\n");
     printf("===   [0]  Voltar                                                     ===\n");
     printf("===                                                                   ===\n");
@@ -53,6 +55,10 @@ void moduloRelatorios(void)
 
         case '3':
             // buscarFuncionarioPorCargo();
+            break;
+
+        case '4':
+            buscarAniversario();
             break;
 
         case '0':

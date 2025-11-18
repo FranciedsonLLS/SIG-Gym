@@ -54,6 +54,7 @@ void buscarAlunoPorPlano(void)
     //                       Buscar alunos no plano
     // ---------------------------------------------------------------------
     int encontrou = 0;
+    int qtd_alunos_plano = 0; // <<--- CONTADOR ADICIONADO
 
     for (int i = 0; i < total_alunos; i++)
     {
@@ -77,6 +78,7 @@ void buscarAlunoPorPlano(void)
             printf("=========================================================================\n\n");
 
             encontrou = 1;
+            qtd_alunos_plano++; // <<--- SOMA A CADA ALUNO
         }
     }
 
@@ -89,6 +91,13 @@ void buscarAlunoPorPlano(void)
         printf("===             NENHUM ALUNO MATRICULADO NESTE PLANO                  ===\n");
         printf("=========================================================================\n");
     }
+
+    // ---------------------------------------------------------------------
+    //                       EXIBIR QUANTIDADE FINAL
+    // ---------------------------------------------------------------------
+    printf("Total de alunos matriculados no plano '%s': %d\n",
+           nome_plano_encontrado,
+           qtd_alunos_plano);
 
     printf(">>> Pressione <ENTER> para continuar...");
     getchar();
