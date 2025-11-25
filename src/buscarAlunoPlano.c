@@ -51,55 +51,56 @@ void buscarAlunoPorPlano(void)
     }
 
     // ---------------------------------------------------------------------
+    //                       Cabeçalho da tabela
+    // ---------------------------------------------------------------------
+    printf("=========================================================================\n");
+    printf(" Alunos matriculados no plano: %s (%s)\n", nome_plano_encontrado, plano_busca);
+    printf("=========================================================================\n\n");
+
+    printf("ID            | Nome                      | Nasc.      | Telefone      | Status\n");
+    printf("-------------------------------------------------------------------------------\n");
+
+    // ---------------------------------------------------------------------
     //                       Buscar alunos no plano
     // ---------------------------------------------------------------------
     int encontrou = 0;
-    int qtd_alunos_plano = 0; // <<--- CONTADOR ADICIONADO
+    int qtd_alunos_plano = 0;
 
     for (int i = 0; i < total_alunos; i++)
     {
         if (lista_alunos[i].ativo &&
             strcmp(lista_alunos[i].plano_id, plano_busca) == 0)
         {
-            printf("=========================================================================\n");
-            printf("===                     ALUNO MATRICULADO NO PLANO                     ===\n");
-            printf("=========================================================================\n");
-
-            printf("ID:          %s\n", lista_alunos[i].id);
-            printf("Nome:        %s\n", lista_alunos[i].nome);
-            printf("Idade:       %s\n", lista_alunos[i].idade);
-            printf("CPF:         %s\n", lista_alunos[i].cpf);
-            printf("Telefone:    %s\n", lista_alunos[i].telefone);
-            printf("Endereço:    %s\n", lista_alunos[i].endereco);
-            printf("Email:       %s\n", lista_alunos[i].email);
-            printf("Plano ID:    %s\n", lista_alunos[i].plano_id);
-            printf("Plano Nome:  %s\n", nome_plano_encontrado);
-
-            printf("=========================================================================\n\n");
+            printf("%-13s | %-25s | %-10s | %-13s | %-6s\n",
+                   lista_alunos[i].id,
+                   lista_alunos[i].nome,
+                   lista_alunos[i].idade,
+                   lista_alunos[i].telefone,
+                   lista_alunos[i].ativo ? "ATIVO" : "INATIVO");
 
             encontrou = 1;
-            qtd_alunos_plano++; // <<--- SOMA A CADA ALUNO
+            qtd_alunos_plano++;
         }
     }
+
+    printf("-------------------------------------------------------------------------------\n");
 
     // ---------------------------------------------------------------------
     //                   nenhum aluno está no plano
     // ---------------------------------------------------------------------
     if (!encontrou)
     {
-        printf("=========================================================================\n");
-        printf("===             NENHUM ALUNO MATRICULADO NESTE PLANO                  ===\n");
-        printf("=========================================================================\n");
+        printf("Nenhum aluno encontrado neste plano.\n");
     }
 
     // ---------------------------------------------------------------------
     //                       EXIBIR QUANTIDADE FINAL
     // ---------------------------------------------------------------------
-    printf("Total de alunos matriculados no plano '%s': %d\n",
+    printf("Total de alunos no plano '%s': %d\n",
            nome_plano_encontrado,
            qtd_alunos_plano);
 
-    printf(">>> Pressione <ENTER> para continuar...");
+    printf("\n>>> Pressione <ENTER> para continuar...");
     getchar();
     limparTela();
 }

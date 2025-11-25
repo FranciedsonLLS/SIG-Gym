@@ -6,32 +6,32 @@
 #include "ui/aluno/cadastrarAluno.h"
 #include "limparTela.h"
 
-void buscarAniversario(void)
+void buscarNascimentoAno(void)
 {
     limparTela();
     printf("=========================================================================\n");
-    printf("===                 RELATÓRIO: ANIVERSARIANTES DO MÊS                 ===\n");
+    printf("===              RELATÓRIO: NASCIDOS EM UM ANO ESPECÍFICO            ===\n");
     printf("=========================================================================\n");
 
-    char mes_str[4];
-    int mes;
+    char ano_str[6];
+    int ano;
 
-    printf(">>> Digite o mês (1 a 12): ");
-    fgets(mes_str, sizeof(mes_str), stdin);
-    mes_str[strcspn(mes_str, "\n")] = '\0';
+    printf(">>> Digite o ano (ex: 2003): ");
+    fgets(ano_str, sizeof(ano_str), stdin);
+    ano_str[strcspn(ano_str, "\n")] = '\0';
 
-    mes = atoi(mes_str);
+    ano = atoi(ano_str);
 
-    if (mes < 1 || mes > 12)
+    if (ano < 1900 || ano > 2100)
     {
-        printf("\nMês inválido!\n");
+        printf("\nAno inválido!\n");
         printf(">>> Pressione <ENTER> para continuar...");
         getchar();
         limparTela();
         return;
     }
 
-    printf("\nListando aniversariantes do mês %02d...\n\n", mes);
+    printf("\nListando nascidos em %d...\n\n", ano);
 
     int encontrou = 0;
 
@@ -40,24 +40,22 @@ void buscarAniversario(void)
     // =====================================================
 
     printf("================================ FUNCIONÁRIOS ================================\n");
-    printf("%-14s | %-25s | %-10s | %-15s\n",
-           "ID", "Nome", "Nasc.", "Cargo");
+    printf("%-14s | %-25s | %-10s | %-15s | %-8s\n",
+           "ID", "Nome", "Nasc.", "Cargo", "Status");
     printf("-----------------------------------------------------------------------------\n");
 
     for (int i = 0; i < total_funcionarios; i++)
     {
-        if (!lista_funcionarios[i].ativo)
-            continue;
+        int ano_nasc = atoi(lista_funcionarios[i].nascimento + 6);
 
-        int mes_nasc = atoi(lista_funcionarios[i].nascimento + 3);
-
-        if (mes_nasc == mes)
+        if (ano_nasc == ano)
         {
-            printf("%-14s | %-25s | %-10s | %-15s\n",
+            printf("%-14s | %-25s | %-10s | %-15s | %-8s\n",
                    lista_funcionarios[i].id,
                    lista_funcionarios[i].nome,
                    lista_funcionarios[i].nascimento,
-                   lista_funcionarios[i].cargo);
+                   lista_funcionarios[i].cargo,
+                   lista_funcionarios[i].ativo ? "ATIVO" : "INATIVO");
 
             encontrou = 1;
         }
@@ -66,28 +64,26 @@ void buscarAniversario(void)
     printf("\n");
 
     // =====================================================
-    //                       ALUNOS (TABELA)
+    //                        ALUNOS (TABELA)
     // =====================================================
 
     printf("=================================== ALUNOS ==================================\n");
-    printf("%-14s | %-25s | %-10s | %-8s\n",
-           "ID", "Nome", "Nasc.", "Plano");
+    printf("%-14s | %-25s | %-10s | %-8s | %-8s\n",
+           "ID", "Nome", "Nasc.", "Plano", "Status");
     printf("-----------------------------------------------------------------------------\n");
 
     for (int i = 0; i < total_alunos; i++)
     {
-        if (!lista_alunos[i].ativo)
-            continue;
+        int ano_nasc = atoi(lista_alunos[i].idade + 6); // idade contém a data
 
-        int mes_nasc = atoi(lista_alunos[i].idade + 3);
-
-        if (mes_nasc == mes)
+        if (ano_nasc == ano)
         {
-            printf("%-14s | %-25s | %-10s | %-8s\n",
+            printf("%-14s | %-25s | %-10s | %-8s | %-8s\n",
                    lista_alunos[i].id,
                    lista_alunos[i].nome,
                    lista_alunos[i].idade,
-                   lista_alunos[i].plano_id);
+                   lista_alunos[i].plano_id,
+                   lista_alunos[i].ativo ? "ATIVO" : "INATIVO");
 
             encontrou = 1;
         }
@@ -96,12 +92,13 @@ void buscarAniversario(void)
     printf("\n");
 
     // =====================================================
-    //                  NENHUM RESULTADO
+    //                       NENHUM REGISTRO
     // =====================================================
+
     if (!encontrou)
     {
         printf("=========================================================================\n");
-        printf("===            NINGUÉM FAZ ANIVERSÁRIO NESTE MÊS                       ===\n");
+        printf("===     NINGUÉM NASCEU NO ANO INFORMADO (%d)                          ===\n", ano);
         printf("=========================================================================\n\n");
     }
 

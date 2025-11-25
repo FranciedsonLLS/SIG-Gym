@@ -4,10 +4,11 @@
 #include "limparTela.h"
 
 // Funções reais dos relatórios:
-#include "buscar.h"           // buscarPorCPF()
-#include "buscarAlunoPlano.h" // buscarAlunoPorPlano()
-// #include "buscarFuncionarioCargo.h" // buscarFuncionarioPorCargo()
-#include "buscarAniversario.h" // <-- NOVO
+#include "buscar.h"            // buscarPorCPF()
+#include "buscarAlunoPlano.h"  // buscarAlunoPorPlano()
+#include "buscarAniversario.h" // Aniversariantes
+#include "buscarAno.h"
+// #include "buscarFuncionarioCargo.h"
 
 char telaRelatorios(void)
 {
@@ -21,6 +22,7 @@ char telaRelatorios(void)
     printf("===   [2]  Listar ALUNOS por PLANO                                    ===\n");
     printf("===   [3]  Listar FUNCIONÁRIOS por CARGO                              ===\n");
     printf("===   [4]  Aniversariantes do mês                                     ===\n");
+    printf("===   [5]  Listar nascidos em um ANO (Alunos + Funcionários)          ===\n");
     printf("===                                                                   ===\n");
     printf("===   [0]  Voltar                                                     ===\n");
     printf("===                                                                   ===\n");
@@ -59,6 +61,10 @@ void moduloRelatorios(void)
 
         case '4':
             buscarAniversario();
+            break;
+
+        case '5':
+            buscarNascimentoAno();
             break;
 
         case '0':
