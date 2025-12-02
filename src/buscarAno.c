@@ -6,12 +6,22 @@
 #include "ui/aluno/cadastrarAluno.h"
 #include "limparTela.h"
 
+// Cores ANSI
+#define COR_TITULO "\033[1;36m"
+#define COR_AMARELO "\033[1;33m"
+#define COR_VERDE "\033[1;32m"
+#define COR_VERMELHO "\033[1;31m"
+#define COR_RESET "\033[0m"
+
 void buscarNascimentoAno(void)
 {
     limparTela();
+
+    printf(COR_TITULO);
     printf("=========================================================================\n");
     printf("===              RELATÓRIO: NASCIDOS EM UM ANO ESPECÍFICO            ===\n");
-    printf("=========================================================================\n");
+    printf("=========================================================================\n\n");
+    printf(COR_RESET);
 
     char ano_str[6];
     int ano;
@@ -24,7 +34,7 @@ void buscarNascimentoAno(void)
 
     if (ano < 1900 || ano > 2100)
     {
-        printf("\nAno inválido!\n");
+        printf(COR_VERMELHO "\nAno inválido!\n" COR_RESET);
         printf(">>> Pressione <ENTER> para continuar...");
         getchar();
         limparTela();
@@ -36,13 +46,18 @@ void buscarNascimentoAno(void)
     int encontrou = 0;
 
     // =====================================================
-    //                   FUNCIONÁRIOS (TABELA)
+    //                   FUNCIONÁRIOS
     // =====================================================
 
-    printf("================================ FUNCIONÁRIOS ================================\n");
+    printf(COR_TITULO);
+    printf("============================== FUNCIONÁRIOS ==============================\n");
+    printf(COR_RESET);
+
+    printf(COR_AMARELO);
     printf("%-14s | %-25s | %-10s | %-15s | %-8s\n",
            "ID", "Nome", "Nasc.", "Cargo", "Status");
-    printf("-----------------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------------\n");
+    printf(COR_RESET);
 
     for (int i = 0; i < total_funcionarios; i++)
     {
@@ -61,20 +76,27 @@ void buscarNascimentoAno(void)
         }
     }
 
-    printf("\n");
+    printf("\n>>> Pressione <ENTER> para ver os ALUNOS...");
+    getchar();
+    limparTela();
 
     // =====================================================
-    //                        ALUNOS (TABELA)
+    //                       ALUNOS
     // =====================================================
 
-    printf("=================================== ALUNOS ==================================\n");
+    printf(COR_TITULO);
+    printf("=============================== ALUNOS =================================\n");
+    printf(COR_RESET);
+
+    printf(COR_AMARELO);
     printf("%-14s | %-25s | %-10s | %-8s | %-8s\n",
            "ID", "Nome", "Nasc.", "Plano", "Status");
-    printf("-----------------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------------\n");
+    printf(COR_RESET);
 
     for (int i = 0; i < total_alunos; i++)
     {
-        int ano_nasc = atoi(lista_alunos[i].idade + 6); // idade contém a data
+        int ano_nasc = atoi(lista_alunos[i].idade + 6); // idade contém data completa
 
         if (ano_nasc == ano)
         {
@@ -97,9 +119,11 @@ void buscarNascimentoAno(void)
 
     if (!encontrou)
     {
+        printf(COR_AMARELO);
         printf("=========================================================================\n");
         printf("===     NINGUÉM NASCEU NO ANO INFORMADO (%d)                          ===\n", ano);
         printf("=========================================================================\n\n");
+        printf(COR_RESET);
     }
 
     printf(">>> Pressione <ENTER> para continuar...");

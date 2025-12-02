@@ -6,12 +6,22 @@
 #include "ui/aluno/cadastrarAluno.h"
 #include "limparTela.h"
 
+// Cores ANSI
+#define COR_TITULO "\033[1;36m"
+#define COR_VERDE "\033[1;32m"
+#define COR_VERMELHO "\033[1;31m"
+#define COR_AMARELO "\033[1;33m"
+#define COR_RESET "\033[0m"
+
 void buscarAniversario(void)
 {
     limparTela();
+
+    printf(COR_TITULO);
     printf("=========================================================================\n");
     printf("===                 RELATÓRIO: ANIVERSARIANTES DO MÊS                 ===\n");
-    printf("=========================================================================\n");
+    printf("=========================================================================\n\n");
+    printf(COR_RESET);
 
     char mes_str[4];
     int mes;
@@ -24,7 +34,7 @@ void buscarAniversario(void)
 
     if (mes < 1 || mes > 12)
     {
-        printf("\nMês inválido!\n");
+        printf(COR_VERMELHO "\nMês inválido!\n" COR_RESET);
         printf(">>> Pressione <ENTER> para continuar...");
         getchar();
         limparTela();
@@ -36,13 +46,17 @@ void buscarAniversario(void)
     int encontrou = 0;
 
     // =====================================================
-    //                   FUNCIONÁRIOS (TABELA)
+    //                   FUNCIONÁRIOS
     // =====================================================
+    printf(COR_TITULO);
+    printf("============================== FUNCIONÁRIOS ==============================\n");
+    printf(COR_RESET);
 
-    printf("================================ FUNCIONÁRIOS ================================\n");
+    printf(COR_AMARELO);
     printf("%-14s | %-25s | %-10s | %-15s\n",
            "ID", "Nome", "Nasc.", "Cargo");
-    printf("-----------------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------------\n");
+    printf(COR_RESET);
 
     for (int i = 0; i < total_funcionarios; i++)
     {
@@ -58,21 +72,26 @@ void buscarAniversario(void)
                    lista_funcionarios[i].nome,
                    lista_funcionarios[i].nascimento,
                    lista_funcionarios[i].cargo);
-
             encontrou = 1;
         }
     }
 
-    printf("\n");
+    printf("\n>>> Pressione <ENTER> para ver os ALUNOS...");
+    getchar();
+    limparTela();
 
     // =====================================================
-    //                       ALUNOS (TABELA)
+    //                       ALUNOS
     // =====================================================
+    printf(COR_TITULO);
+    printf("=============================== ALUNOS =================================\n");
+    printf(COR_RESET);
 
-    printf("=================================== ALUNOS ==================================\n");
+    printf(COR_AMARELO);
     printf("%-14s | %-25s | %-10s | %-8s\n",
            "ID", "Nome", "Nasc.", "Plano");
-    printf("-----------------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------------\n");
+    printf(COR_RESET);
 
     for (int i = 0; i < total_alunos; i++)
     {
@@ -88,7 +107,6 @@ void buscarAniversario(void)
                    lista_alunos[i].nome,
                    lista_alunos[i].idade,
                    lista_alunos[i].plano_id);
-
             encontrou = 1;
         }
     }
@@ -100,9 +118,11 @@ void buscarAniversario(void)
     // =====================================================
     if (!encontrou)
     {
+        printf(COR_AMARELO);
         printf("=========================================================================\n");
         printf("===            NINGUÉM FAZ ANIVERSÁRIO NESTE MÊS                       ===\n");
         printf("=========================================================================\n\n");
+        printf(COR_RESET);
     }
 
     printf(">>> Pressione <ENTER> para continuar...");

@@ -4,32 +4,56 @@
 #include "limparTela.h"
 
 // Funções reais dos relatórios:
-#include "buscar.h"            // buscarPorCPF()
-#include "buscarAlunoPlano.h"  // buscarAlunoPorPlano()
-#include "buscarAniversario.h" // Aniversariantes
-#include "buscarAno.h"         // Nascidos em ano
-#include "buscarPPNome.h"      // <<---- NOVO (Busca por primeiro nome)
-// #include "buscarFuncionarioCargo.h"
+#include "buscar.h"                 // buscarPorCPF()
+#include "buscarAlunoPlano.h"       // buscarAlunoPorPlano()
+#include "buscarAniversario.h"      // Aniversariantes
+#include "buscarAno.h"              // Nascidos em ano
+#include "buscarPPNome.h"           // Busca por primeiro nome
+#include "buscarFuncionarioCargo.h" // <<---- NOVO
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "limparTela.h"
+
+// Cores ANSI
+#define COR_TITULO "\033[1;36m"
+#define COR_OPCAO "\033[1;33m"
+#define COR_RESET "\033[0m"
+#define COR_VERDE "\033[1;32m"
+#define COR_CINZA "\033[1;90m"
 
 char telaRelatorios(void)
 {
     limparTela();
 
-    printf("=========================================================================\n");
-    printf("===                           RELATÓRIOS                              ===\n");
-    printf("=========================================================================\n");
-    printf("===                                                                   ===\n");
-    printf("===   [1]  Buscar perfil por CPF                                      ===\n");
-    printf("===   [2]  Listar ALUNOS por PLANO                                    ===\n");
-    printf("===   [3]  Listar FUNCIONÁRIOS por CARGO                              ===\n");
-    printf("===   [4]  Aniversariantes do mês                                     ===\n");
-    printf("===   [5]  Listar nascidos em um ANO (Alunos + Funcionários)          ===\n");
-    printf("===   [6]  Buscar pessoas pelo PRIMEIRO NOME                          ===\n");
-    printf("===                                                                   ===\n");
-    printf("===   [0]  Voltar                                                     ===\n");
-    printf("===                                                                   ===\n");
-    printf("=========================================================================\n");
-    printf("=========================================================================\n");
+    printf(COR_TITULO);
+    printf("===============================================================================\n");
+    printf("===                               RELATÓRIOS                                ===\n");
+    printf("===============================================================================\n");
+    printf(COR_RESET);
+
+    printf("===                                                                         ===\n");
+    printf("===  " COR_VERDE ">> CONSULTAS INDIVIDUAIS" COR_RESET "                                               ===\n");
+    printf("===      " COR_OPCAO "[1]" COR_RESET " Buscar perfil por CPF                                          ===\n");
+    printf("===      " COR_OPCAO "[6]" COR_RESET " Buscar pelo PRIMEIRO NOME                                      ===\n");
+    printf("===                                                                         ===\n");
+
+    printf("===  " COR_VERDE ">> AGRUPAMENTOS / LISTAGENS" COR_RESET "                                            ===\n");
+    printf("===      " COR_OPCAO "[2]" COR_RESET " Listar ALUNOS por PLANO                                        ===\n");
+    printf("===      " COR_OPCAO "[3]" COR_RESET " Listar FUNCIONÁRIOS por CARGO                                  ===\n");
+    printf("===      " COR_OPCAO "[7]" COR_RESET " Listar INATIVOS (Alunos + Funcionários)                        ===\n");
+    printf("===                                                                         ===\n");
+
+    printf("===  " COR_VERDE ">> RELATÓRIOS ESPECIAIS" COR_RESET "                                                ===\n");
+    printf("===      " COR_OPCAO "[4]" COR_RESET " Aniversariantes do mês                                         ===\n");
+    printf("===      " COR_OPCAO "[5]" COR_RESET " Nascidos em um ANO (Alunos + Funcionários)                     ===\n");
+    printf("===                                                                         ===\n");
+
+    printf("===  ---------------------------------------------------------------------  ===\n");
+    printf("===      " COR_OPCAO "[0]" COR_RESET " Voltar ao menu anterior                                        ===\n");
+    printf("===  ---------------------------------------------------------------------  ===\n");
+
+    printf("===============================================================================\n");
     printf(">>> Escolha uma opção: ");
 
     char op;
@@ -58,7 +82,7 @@ void moduloRelatorios(void)
             break;
 
         case '3':
-            // buscarFuncionarioPorCargo();
+            buscarFuncionarioCargo();
             break;
 
         case '4':
@@ -70,7 +94,11 @@ void moduloRelatorios(void)
             break;
 
         case '6':
-            buscarPPNome(); // <<---- NOVO
+            buscarPPNome();
+            break;
+
+        case '7':
+            buscarInativos(); // <<< NOVO
             break;
 
         case '0':

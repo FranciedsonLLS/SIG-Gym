@@ -9,7 +9,6 @@
 #define FUNCIONARIOS_FILE "funcionarios.dat"
 #define TMP_FILE_FUNC "funcionarios.tmp"
 
-// Salva todos os funcionários ativos no arquivo binário
 void salvarFuncionarios(struct funcionario lista_funcionarios[], int total_funcionarios)
 {
     FILE *fp = fopen(TMP_FILE_FUNC, "wb");
@@ -21,11 +20,8 @@ void salvarFuncionarios(struct funcionario lista_funcionarios[], int total_funci
 
     for (int i = 0; i < total_funcionarios; i++)
     {
-        if (lista_funcionarios[i].ativo)
-        {
-            // Escreve a struct completa em binário
-            fwrite(&lista_funcionarios[i], sizeof(struct funcionario), 1, fp);
-        }
+        // SALVAR TODOS, inclusive inativos
+        fwrite(&lista_funcionarios[i], sizeof(struct funcionario), 1, fp);
     }
 
     fclose(fp);
