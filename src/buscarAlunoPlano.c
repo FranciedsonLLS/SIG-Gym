@@ -13,6 +13,30 @@
 #define COR_AMARELO "\033[1;33m"
 #define COR_RESET "\033[0m"
 
+// ======================================================================
+//  FUNÇÃO LOCAL PARA LIMPAR STRINGS (NÃO CONFLITA COM OUTROS .C)
+// ======================================================================
+static void limparString(char *str)
+{
+    // Remove \n
+    str[strcspn(str, "\n")] = '\0';
+
+    // Remove espaços no início
+    while (*str == ' ')
+    {
+        memmove(str, str + 1, strlen(str));
+    }
+
+    // Remove espaços no final
+    while (strlen(str) > 0 && str[strlen(str) - 1] == ' ')
+    {
+        str[strlen(str) - 1] = '\0';
+    }
+}
+
+// ======================================================================
+//  FUNÇÃO PRINCIPAL: BUSCAR ALUNOS POR PLANO (ORDENADO ALFABÉTICO)
+// ======================================================================
 void buscarAlunoPorPlano(void)
 {
     limparTela();
@@ -27,13 +51,10 @@ void buscarAlunoPorPlano(void)
 
     printf(">>> Digite o ID do plano: ");
     fgets(plano_busca, sizeof(plano_busca), stdin);
-    plano_busca[strcspn(plano_busca, "\n")] = '\0';
+    limparString(plano_busca);
 
     printf("\n");
 
-    // ---------------------------------------------------------------------
-    //       Primeiro: verificar se o plano existe e obter seu nome
-    // ---------------------------------------------------------------------
     char nome_plano_encontrado[MAX_BUFFER] = "DESCONHECIDO";
     int plano_existe = 0;
 
@@ -43,6 +64,7 @@ void buscarAlunoPorPlano(void)
             strcmp(lista_planos[i].id, plano_busca) == 0)
         {
             strcpy(nome_plano_encontrado, lista_planos[i].nome);
+            limparString(nome_plano_encontrado);
             plano_existe = 1;
             break;
         }
@@ -62,9 +84,6 @@ void buscarAlunoPorPlano(void)
         return;
     }
 
-    // ---------------------------------------------------------------------
-    //                 Buscar alunos do plano (salvar em vetor auxiliar)
-    // ---------------------------------------------------------------------
     struct aluno **alunosEncontrados = NULL;
     int qtd = 0;
 
@@ -73,7 +92,6 @@ void buscarAlunoPorPlano(void)
         alunosEncontrados = malloc(sizeof(struct aluno *) * total_alunos);
         if (!alunosEncontrados)
         {
-            // falha de alocação (muito improvável, mas tratamos)
             printf(COR_VERMELHO "Erro de memoria. Impossivel listar alunos.\n" COR_RESET);
             printf(">>> Pressione <ENTER> para continuar...");
             getchar();
@@ -87,13 +105,11 @@ void buscarAlunoPorPlano(void)
         if (lista_alunos[i].ativo &&
             strcmp(lista_alunos[i].plano_id, plano_busca) == 0)
         {
+            limparString(lista_alunos[i].nome);
             alunosEncontrados[qtd++] = &lista_alunos[i];
         }
     }
 
-    // ---------------------------------------------------------------------
-    //                  Ordenar os alunos por nome (alfabético)
-    // ---------------------------------------------------------------------
     if (qtd > 1)
     {
         for (int i = 0; i < qtd - 1; i++)
@@ -110,9 +126,6 @@ void buscarAlunoPorPlano(void)
         }
     }
 
-    // ---------------------------------------------------------------------
-    //                       Cabeçalho da tabela
-    // ---------------------------------------------------------------------
     printf(COR_TITULO);
     printf("=========================================================================\n");
     printf("  Alunos matriculados no plano: %s (%s)\n", nome_plano_encontrado, plano_busca);
@@ -125,9 +138,6 @@ void buscarAlunoPorPlano(void)
     printf("-------------------------------------------------------------------------------\n");
     printf(COR_RESET);
 
-    // ---------------------------------------------------------------------
-    //                       Exibir alunos ordenados
-    // ---------------------------------------------------------------------
     if (qtd == 0)
     {
         printf(COR_AMARELO);
@@ -155,14 +165,10 @@ void buscarAlunoPorPlano(void)
 
     printf("-------------------------------------------------------------------------------\n");
 
-    // ---------------------------------------------------------------------
-    //                       EXIBIR QUANTIDADE FINAL
-    // ---------------------------------------------------------------------
     printf(COR_TITULO);
     printf("\nTotal de alunos no plano '%s': %d\n", nome_plano_encontrado, qtd);
     printf(COR_RESET);
 
-    // liberar o buffer auxiliar
     free(alunosEncontrados);
 
     printf("\n>>> Pressione <ENTER> para continuar...");
